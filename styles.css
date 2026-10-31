@@ -1,0 +1,1346 @@
+/* ==========================================================================
+   CimaAlerta - Centro Nacional de Monitoreo Sísmico
+   Figma Exact Design & Responsive UX/UI Implementation
+   ========================================================================== */
+
+:root {
+    --bg-page: #F6EEDB;
+    --header-bg: #97CFB0;
+    --alert-bg: #F58220;
+    --card-bg: #FFFFFF;
+    --border-color: #E2DDD3;
+
+    --color-text-main: #1F2937;
+    --color-text-muted: #6B7280;
+    --color-text-subtle: #4B5563;
+
+    --color-danger: #DC2626;
+    --color-warning: #EA580C;
+    --color-alert-amber: #D97706;
+    --color-success: #15803D;
+    --color-primary-green: #0E6B38;
+    --color-slate-dark: #334155;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-page);
+    color: var(--color-text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Top Navigation Bar
+   ========================================================================== */
+.top-nav {
+    background-color: var(--header-bg);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    position: relative;
+    z-index: 100;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-logo-box {
+    width: 34px;
+    height: 34px;
+    background-color: #1F2937;
+    color: #FFFFFF;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.brand-logo-box svg {
+    width: 20px;
+    height: 20px;
+}
+
+.brand-title {
+    font-size: 1.28rem;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.3px;
+}
+
+.brand-badge {
+    background: rgba(0, 0, 0, 0.08);
+    color: #374151;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.5px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sensor-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wifi-icon {
+    width: 18px;
+    height: 18px;
+    color: #1F2937;
+}
+
+.status-pill {
+    background-color: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #166534;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #16A34A;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 rgba(22, 163, 74, 0.6);
+    animation: greenPulse 2s infinite;
+}
+
+@keyframes greenPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(22, 163, 74, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+    }
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+}
+
+.user-profile:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.user-avatar {
+    position: relative;
+}
+
+.user-avatar img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.user-profile:hover .user-avatar img {
+    transform: scale(1.08);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.user-name {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.user-role {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* ==========================================================================
+   Alert Ribbon Banner
+   ========================================================================== */
+.alert-ribbon {
+    background-color: var(--alert-bg);
+    color: #FFFFFF;
+    padding: 9px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.87rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.alert-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-icon {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+}
+
+.alert-ribbon p {
+    margin: 0;
+    font-weight: 500;
+}
+
+.alert-ribbon strong {
+    font-weight: 700;
+}
+
+.estacion-pill {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   Main Dashboard Layout Grid
+   ========================================================================== */
+.dashboard-wrapper {
+    flex: 1;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 1540px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.dashboard-grid-top {
+    display: grid;
+    grid-template-columns: 1fr 390px;
+    gap: 18px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Map Card & Floating Epicenter Card
+   ========================================================================== */
+.map-card {
+    position: relative;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+}
+
+.map-view {
+    width: 100%;
+    height: 100%;
+    background-color: #EBF3F0;
+    z-index: 1;
+}
+
+/* Floating Epicenter Overlay */
+.epicenter-overlay {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    width: 250px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+.epicenter-overlay:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.overlay-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+}
+
+.live-dot-red {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-danger);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 rgba(220, 38, 38, 0.7);
+    animation: redPulse 1.8s infinite;
+}
+
+@keyframes redPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 7px rgba(220, 38, 38, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+    }
+}
+
+.overlay-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #4B5563;
+}
+
+.overlay-magnitude-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.mag-number {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--color-danger);
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.mag-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.mag-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.mag-severity {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-danger);
+}
+
+.overlay-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-top: 1px solid #F3F4F6;
+    padding-top: 10px;
+    font-size: 0.78rem;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.detail-val {
+    font-weight: 700;
+    color: #111827;
+}
+
+.detail-val.highlight {
+    color: var(--color-danger);
+    font-weight: 800;
+}
+
+/* ==========================================================================
+   Leaflet Custom Pulse Animations (Seismic Waves on Map)
+   ========================================================================== */
+.seismic-epicenter-marker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seismic-pulse-ring {
+    position: absolute;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(220, 38, 38, 0.85);
+    background: rgba(220, 38, 38, 0.12);
+    animation: seismicRipple 2.4s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.seismic-pulse-ring:nth-child(2) {
+    animation-delay: 0.8s;
+}
+
+.seismic-pulse-ring:nth-child(3) {
+    animation-delay: 1.6s;
+}
+
+@keyframes seismicRipple {
+    0% {
+        transform: scale(0.3);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+.seismic-center-circle {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    background-color: var(--color-danger);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.86rem;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    z-index: 10;
+}
+
+/* Secondary Earthquake Markers */
+.quake-circle-marker {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.74rem;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.quake-circle-marker:hover {
+    transform: scale(1.15);
+}
+
+.quake-circle-marker.sev-amber {
+    background-color: #F59E0B;
+}
+
+.quake-circle-marker.sev-orange {
+    background-color: #EA580C;
+}
+
+.quake-circle-marker.sev-green {
+    background-color: #10B981;
+}
+
+/* ==========================================================================
+   Right Column Layout (Sismos Recientes & Acciones Rápidas)
+   ========================================================================== */
+.dashboard-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.card-header {
+    padding: 16px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.live-badge {
+    background-color: #F3F4F6;
+    color: #4B5563;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.5px;
+}
+
+/* Quake List (Panel / Semáforo de Nivel de Alerta) */
+.quake-list {
+    list-style: none;
+    padding: 8px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quake-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    background-color: #FFFFFF;
+    border: 1px solid #F1F2F4;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quake-item:hover,
+.quake-item.active {
+    background-color: #F9FAFB;
+    border-color: #D1D5DB;
+    transform: translateX(3px);
+}
+
+.badge-mag {
+    width: 54px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-right: 14px;
+}
+
+.badge-mag.mag-high {
+    background-color: var(--color-danger);
+}
+
+.badge-mag.mag-medium {
+    background-color: var(--color-warning);
+}
+
+.badge-mag.mag-mid-amber {
+    background-color: #D97706;
+}
+
+.badge-mag.mag-low {
+    background-color: #16A34A;
+}
+
+.quake-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.quake-place {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.quake-depth {
+    font-size: 0.74rem;
+    color: var(--color-text-muted);
+}
+
+.quake-time {
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   Acciones Rápidas (2x2 Buttons Grid)
+   ========================================================================== */
+.quick-actions-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.action-buttons-grid {
+    padding: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-action:active {
+    transform: translateY(0);
+}
+
+.btn-action .btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.btn-action .btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.btn-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-subtitle {
+    font-size: 0.7rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Button 1: Emergencias (Red) */
+.btn-emergency {
+    background-color: #D32F2F;
+    color: #FFFFFF;
+}
+
+.btn-emergency .btn-icon {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+}
+
+.btn-emergency .btn-subtitle {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Button 2: Mochila y Checklist (Gray) */
+.btn-checklist {
+    background-color: #F1F3F5;
+    color: #1F2937;
+    border-color: #E5E7EB;
+}
+
+.btn-checklist .btn-icon {
+    background-color: #64748B;
+    color: #FFFFFF;
+}
+
+.btn-checklist .btn-subtitle {
+    color: var(--color-text-muted);
+}
+
+/* Button 3: Protección Civil (Dark Navy Slate) */
+.btn-protection {
+    background-color: #334155;
+    color: #FFFFFF;
+}
+
+.btn-protection .btn-icon {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+}
+
+.btn-protection .btn-subtitle {
+    color: #CBD5E1;
+}
+
+/* Button 4: Alertas (Gray) */
+.btn-alerts {
+    background-color: #F1F3F5;
+    color: #1F2937;
+    border-color: #E5E7EB;
+}
+
+.btn-alerts .btn-icon {
+    background-color: #64748B;
+    color: #FFFFFF;
+}
+
+.btn-alerts .btn-subtitle {
+    color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Bottom Timeseries Chart Card
+   ========================================================================== */
+.timeseries-card {
+    padding: 18px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.timeseries-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.card-subtitle {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-top: 3px;
+}
+
+.graph-legend-toggles {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.legend-items {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.legend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #4B5563;
+}
+
+.legend-pill .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.legend-pill.red-pill .dot {
+    background-color: var(--color-danger);
+}
+
+.legend-pill.amber-pill .dot {
+    background-color: var(--color-alert-amber);
+}
+
+.legend-pill.green-pill .dot {
+    background-color: var(--color-success);
+}
+
+.view-switch-btns {
+    display: flex;
+    background-color: #F3F4F6;
+    padding: 3px;
+    border-radius: var(--radius-sm);
+    gap: 4px;
+}
+
+.btn-switch {
+    background: transparent;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #4B5563;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-switch.active {
+    background-color: #FFFFFF;
+    color: #111827;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+}
+
+/* ==========================================================================
+   Modal Dialogs & Backdrops
+   ========================================================================== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding: 16px;
+}
+
+.modal-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-dialog {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 560px;
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+    transform: scale(0.95);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-dialog.modal-wide {
+    max-width: 680px;
+}
+
+.modal-backdrop.open .modal-dialog {
+    transform: scale(1);
+}
+
+.modal-header {
+    padding: 20px 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.modal-title {
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F3F4F6;
+    color: #4B5563;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background-color 0.15s ease;
+}
+
+.modal-close:hover {
+    background-color: #E5E7EB;
+    color: #111827;
+}
+
+.modal-body {
+    padding: 22px 24px;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #374151;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #D1D5DB;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: #111827;
+    background-color: #FFFFFF;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0E6B38;
+    box-shadow: 0 0 0 3px rgba(14, 107, 56, 0.15);
+}
+
+/* Custom Radio Buttons */
+.radio-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: #1F2937;
+    user-select: none;
+}
+
+.radio-label input[type="radio"] {
+    display: none;
+}
+
+.radio-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #9CA3AF;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+
+.radio-label input[type="radio"]:checked+.radio-custom {
+    border-color: #0E6B38;
+    background-color: #0E6B38;
+}
+
+.radio-label input[type="radio"]:checked+.radio-custom::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-modal {
+    padding: 10px 22px;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-cancel {
+    background-color: #F3F4F6;
+    color: #4B5563;
+}
+
+.btn-cancel:hover {
+    background-color: #E5E7EB;
+    color: #111827;
+}
+
+.btn-submit {
+    background-color: #0E6B38;
+    color: #FFFFFF;
+}
+
+.btn-submit:hover {
+    background-color: #094F28;
+}
+
+.btn-emergency-call {
+    background-color: var(--color-danger);
+    color: #FFFFFF;
+}
+
+.btn-emergency-call:hover {
+    background-color: #B91C1C;
+}
+
+/* ==========================================================================
+   Checklist Modal Styles (Guía de Acción y Mochila)
+   ========================================================================== */
+.checklist-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.checklist-col-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.checklist-col-header h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.col-icon {
+    width: 18px;
+    height: 18px;
+    color: #0E6B38;
+}
+
+.checklist-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.84rem;
+    color: #374151;
+    cursor: pointer;
+    line-height: 1.35;
+    user-select: none;
+}
+
+.check-item input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: #0E6B38;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 1px;
+}
+
+.checklist-tip-box {
+    background-color: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.tip-icon {
+    width: 22px;
+    height: 22px;
+    color: #D97706;
+    flex-shrink: 0;
+}
+
+.checklist-tip-box p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #4B5563;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   Contact Cards & Settings
+   ========================================================================== */
+.contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+.contact-card.primary {
+    background-color: #FEF2F2;
+    border-color: #FECACA;
+}
+
+.contact-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+
+.contact-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-data strong {
+    font-size: 0.9rem;
+    color: #1E293B;
+}
+
+.contact-data span {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #0E6B38;
+    margin: 2px 0;
+}
+
+.contact-data .phone-highlight {
+    font-size: 1.3rem;
+    color: var(--color-danger);
+    font-weight: 800;
+}
+
+.contact-data small {
+    font-size: 0.74rem;
+    color: #64748B;
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.switch-row strong {
+    font-size: 0.9rem;
+    display: block;
+    color: #1E293B;
+}
+
+.switch-row .text-muted {
+    font-size: 0.76rem;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+}
+
+.switch-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #0E6B38;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background-color: #1F2937;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: all 0.25s ease;
+}
+
+.toast-container.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-icon {
+    background-color: #10B981;
+    color: #FFFFFF;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+/* ==========================================================================
+   Responsive Adaptability (Tablets & Mobile)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .dashboard-grid-top {
+        grid-template-columns: 1fr;
+    }
+
+    .map-card {
+        height: 420px;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .nav-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .alert-ribbon {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .dashboard-wrapper {
+        padding: 14px;
+    }
+
+    .action-buttons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checklist-columns {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .epicenter-overlay {
+        width: calc(100% - 36px);
+        max-width: 280px;
+    }
+}

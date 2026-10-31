@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CimaAlerta - Centro Nacional de Monitoreo Sísmico</title>
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23059669' stroke-width='2'><path d='M22 12h-4l-3 9L9 3l-3 9H2'/></svg>">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Top Header Bar -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <div class="brand-logo-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+            </div>
+            <span class="brand-title">CimaAlerta</span>
+            <span class="brand-badge">Baja California</span>
+        </div>
+
+        <div class="nav-right">
+            <div class="sensor-status" id="sensorStatus">
+                <svg class="wifi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                    <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                </svg>
+                <span class="status-pill">
+                    <span class="pulse-dot"></span>
+                    <span id="sensorStatusText">Sensores: Operativos</span>
+                </span>
+            </div>
+
+            <div class="user-profile" id="userProfileBtn" title="Haz clic para subir tu foto de perfil">
+                <div class="user-avatar">
+                    <img id="userAvatarImg" src="perfil.jpg" alt="Foto de Perfil"
+                        onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Willy+Tarin&background=0D8ABC&color=fff';">
+                    <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+                </div>
+                <div class="user-info">
+                    <span class="user-name" id="profileUserName" title="Clic para editar nombre">Willy Castellano</span>
+                    <span class="user-role">Brigadista UABC</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Alert Ribbon / Banner -->
+    <aside class="alert-ribbon" id="alertBanner" role="alert">
+        <div class="alert-content">
+            <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <p id="alertBannerText">
+                <strong>Último evento detectado: <span id="bannerTimeElapsed">12 min</span>.</strong>
+                Manténgase alerta en las zonas de réplica del norte del país.
+            </p>
+        </div>
+        <div class="alert-actions">
+            <span class="estacion-pill" id="badgeEstacion">Estación: CI.BAR.BHZ</span>
+        </div>
+    </aside>
+
+    <!-- Main Dashboard Layout -->
+    <main class="dashboard-wrapper">
+        <div class="dashboard-grid-top">
+            <!-- Map Card (Left) -->
+            <section class="card map-card" aria-label="Mapa de epicentro">
+                <div id="map" class="map-view"></div>
+
+                <!-- Epicenter Floating Overlay Card -->
+                <article class="epicenter-overlay" id="epicenterCard">
+                    <div class="overlay-header">
+                        <span class="live-dot-red"></span>
+                        <span class="overlay-tag" id="epicenterStatusTag">EPICENTRO ACTIVO</span>
+                    </div>
+
+                    <div class="overlay-magnitude-row">
+                        <span class="mag-number" id="epicenterMagnitude">5.4</span>
+                        <div class="mag-meta">
+                            <span class="mag-label">Magnitud M</span>
+                            <span class="mag-severity" id="epicenterSeverity">Severidad alta</span>
+                        </div>
+                    </div>
+
+                    <div class="overlay-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Ubicación:</span>
+                            <span class="detail-val" id="epicenterLocation">Mexicali, BC</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Hora Local:</span>
+                            <span class="detail-val" id="epicenterLocalTime">14:32:18</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Profundidad:</span>
+                            <span class="detail-val" id="epicenterDepth">12.4 km</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Pico Amplitud:</span>
+                            <span class="detail-val highlight" id="epicenterPeakAmp">2920.0</span>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Right Column -->
+            <div class="dashboard-col-right">
+                <!-- Sismos Recientes Card (Semáforo de Alerta) -->
+                <section class="card recent-quakes-card" aria-label="Sismos Recientes">
+                    <div class="card-header">
+                        <h2 class="card-title">Sismos Recientes</h2>
+                        <span class="live-badge">EN VIVO</span>
+                    </div>
+                    <ul class="quake-list" id="quakeList">
+                        <!-- Populated dynamically via app.js -->
+                    </ul>
+                </section>
+
+                <!-- Acciones Rápidas Card -->
+                <section class="card quick-actions-card" aria-label="Acciones Rápidas">
+                    <div class="card-header">
+                        <h2 class="card-title">Acciones Rápidas</h2>
+                    </div>
+                    <div class="action-buttons-grid">
+                        <!-- Emergencias 911 -->
+                        <button class="btn-action btn-emergency" id="btnOpenEmergencyModal" type="button">
+                            <div class="btn-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="btn-text">
+                                <span class="btn-title">Emergencias</span>
+                                <span class="btn-subtitle">Llamar al 911</span>
+                            </div>
+                        </button>
+
+                        <!-- Mochila y Checklist -->
+                        <button class="btn-action btn-checklist" id="btnOpenChecklistModal" type="button">
+                            <div class="btn-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10Z">
+                                    </path>
+                                    <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
+                                    <path d="M8 21v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4"></path>
+                                    <path d="M8 10h8"></path>
+                                </svg>
+                            </div>
+                            <div class="btn-text">
+                                <span class="btn-title">Mochila y Checklist</span>
+                                <span class="btn-subtitle">Guía de Acción</span>
+                            </div>
+                        </button>
+
+                        <!-- Protección Civil -->
+                        <button class="btn-action btn-protection" id="btnOpenContactsModal" type="button">
+                            <div class="btn-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                            </div>
+                            <div class="btn-text">
+                                <span class="btn-title">Protección Civil</span>
+                                <span class="btn-subtitle">Directorio de Contactos</span>
+                            </div>
+                        </button>
+
+                        <!-- Alertas / Configurar -->
+                        <button class="btn-action btn-alerts" id="btnOpenSettingsModal" type="button">
+                            <div class="btn-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                                    </path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="btn-text">
+                                <span class="btn-title">Alertas</span>
+                                <span class="btn-subtitle">Configurar Dispositivos</span>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Bottom Card: Gráfica de Serie de Tiempo (Amplitud vs. Tiempo) -->
+        <section class="card timeseries-card" aria-label="Gráfica de Actividad Sísmica">
+            <div class="timeseries-header">
+                <div>
+                    <h2 class="card-title" id="graphTitle">Actividad Sísmica – Serie de Tiempo (Amplitud vs. Tiempo)
+                    </h2>
+                    <p class="card-subtitle" id="graphSubtitle">
+                        Conectado a estructura JSON Semana 9 (Estación <span id="infoEstacionNombre">CI.BAR.BHZ</span>)
+                        | 3,600 lecturas por segundo (Downsampled)
+                    </p>
+                </div>
+                <div class="graph-legend-toggles">
+                    <div class="legend-items">
+                        <span class="legend-pill red-pill"><span class="dot"></span> Amplitud ≥ 2000 (Crítico)</span>
+                        <span class="legend-pill amber-pill"><span class="dot"></span> 1700 - 1999 (Medio)</span>
+                        <span class="legend-pill green-pill"><span class="dot"></span> &lt; 1700 (Normal)</span>
+                    </div>
+                    <div class="view-switch-btns">
+                        <button class="btn-switch active" id="btnViewAll" type="button">Todo (1 Hora)</button>
+                        <button class="btn-switch" id="btnViewPeak" type="button">Ventana del Sismo</button>
+                        <button class="btn-switch" id="btnViewFigma" type="button">Modo Figma (30 Días)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="graficaSismica"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal 1: Reportar Daños o Emergencias -->
+    <div class="modal-backdrop" id="modalEmergency" aria-hidden="true">
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalEmergencyTitle">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalEmergencyTitle">Reportar Daños o Emergencias</h3>
+                <button class="modal-close" id="btnCloseEmergency" type="button"
+                    aria-label="Cerrar modal">&times;</button>
+            </div>
+            <form id="emergencyForm" class="modal-body">
+                <div class="form-group">
+                    <label for="inputFullName">NOMBRE COMPLETO</label>
+                    <input type="text" id="inputFullName" class="form-control" value="Willy Tarín Castellano" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPhone">TELÉFONO DE CONTACTO</label>
+                    <input type="tel" id="inputPhone" class="form-control" value="686 123 4567" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputLocation">UBICACIÓN PRECISA</label>
+                    <input type="text" id="inputLocation" class="form-control"
+                        value="Calle Novena y Av. Juárez, Mexicali" required>
+                </div>
+
+                <div class="form-group">
+                    <label>TIPO DE EMERGENCIA</label>
+                    <div class="radio-options">
+                        <label class="radio-label">
+                            <input type="radio" name="tipoEmergencia" value="Sismo con daños estructurales" checked>
+                            <span class="radio-custom"></span>
+                            <span class="radio-text">Sismo con daños estructurales</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipoEmergencia" value="Incendio">
+                            <span class="radio-custom"></span>
+                            <span class="radio-text">Incendio</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipoEmergencia" value="Inundación">
+                            <span class="radio-custom"></span>
+                            <span class="radio-text">Inundación</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipoEmergencia" value="Accidente vehicular">
+                            <span class="radio-custom"></span>
+                            <span class="radio-text">Accidente vehicular</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipoEmergencia" value="Atención médica urgente">
+                            <span class="radio-custom"></span>
+                            <span class="radio-text">Atención médica urgente</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDescription">DESCRIPCIÓN DE LA SITUACIÓN</label>
+                    <textarea id="inputDescription" class="form-control" rows="3"
+                        required>Grietas profundas visibles en muros de soporte del edificio de departamentos de 3 pisos...</textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-modal btn-cancel" id="btnCancelEmergency">Cancelar</button>
+                    <button type="submit" class="btn-modal btn-submit">Enviar Reporte</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 2: Guía de Acción y Mochila -->
+    <div class="modal-backdrop" id="modalChecklist" aria-hidden="true">
+        <div class="modal-dialog modal-wide" role="dialog" aria-modal="true" aria-labelledby="modalChecklistTitle">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalChecklistTitle">Guía de Acción y Mochila</h3>
+                <button class="modal-close" id="btnCloseChecklist" type="button"
+                    aria-label="Cerrar modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="checklist-columns">
+                    <!-- Column 1: Guía de Acción Sísmica -->
+                    <div class="checklist-col">
+                        <div class="checklist-col-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                class="col-icon">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <h4>Guía de Acción Sísmica</h4>
+                        </div>
+                        <div class="checklist-items" id="listaAccionSismica">
+                            <label class="check-item"><input type="checkbox" checked data-id="calma"> <span>Mantener la
+                                    calma</span></label>
+                            <label class="check-item"><input type="checkbox" checked data-id="no_correr"> <span>No
+                                    correr ni usar elevadores</span></label>
+                            <label class="check-item"><input type="checkbox" data-id="triangulo"> <span>Buscar el
+                                    Triángulo de la Vida</span></label>
+                            <label class="check-item"><input type="checkbox" checked data-id="ventanas"> <span>Alejarse
+                                    de ventanas y objetos que puedan caer</span></label>
+                            <label class="check-item"><input type="checkbox" data-id="llaves"> <span>Cerrar llaves de
+                                    gas y agua</span></label>
+                            <label class="check-item"><input type="checkbox" data-id="punto_reunion"> <span>Dirigirse al
+                                    punto de reunión</span></label>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Mochila de Emergencia -->
+                    <div class="checklist-col">
+                        <div class="checklist-col-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                class="col-icon">
+                                <path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10Z">
+                                </path>
+                                <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            <h4>Mochila de Emergencia</h4>
+                        </div>
+                        <div class="checklist-items" id="listaMochilaEmergencia">
+                            <label class="check-item"><input type="checkbox" checked data-id="agua"> <span>Agua
+                                    embotellada</span></label>
+                            <label class="check-item"><input type="checkbox" checked data-id="comida"> <span>Alimentos
+                                    no perecederos</span></label>
+                            <label class="check-item"><input type="checkbox" checked data-id="linterna"> <span>Linterna
+                                    con pilas</span></label>
+                            <label class="check-item"><input type="checkbox" data-id="botiquin"> <span>Botiquín de
+                                    primeros auxilios</span></label>
+                            <label class="check-item"><input type="checkbox" data-id="radio"> <span>Radio de pilas
+                                    AM/FM</span></label>
+                            <label class="check-item"><input type="checkbox" data-id="manta"> <span>Manta
+                                    térmica</span></label>
+                            <label class="check-item"><input type="checkbox" data-id="silbato"> <span>Silbato de
+                                    emergencia</span></label>
+                            <label class="check-item"><input type="checkbox" data-id="docs"> <span>Documentos
+                                    importantes</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checklist-tip-box">
+                    <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18h6"></path>
+                        <path d="M10 22h4"></path>
+                        <path
+                            d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14">
+                        </path>
+                    </svg>
+                    <p>Prepare su mochila con elementos esenciales para sobrevivir las primeras 72 horas de forma
+                        autónoma.</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-modal btn-cancel" id="btnCancelChecklist">Cerrar</button>
+                    <button type="button" class="btn-modal btn-submit" id="btnSaveChecklist">Guardar Checklist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Protección Civil Contactos -->
+    <div class="modal-backdrop" id="modalContacts" aria-hidden="true">
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalContactsTitle">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalContactsTitle">Directorio de Protección Civil BC</h3>
+                <button class="modal-close" id="btnCloseContacts" type="button"
+                    aria-label="Cerrar modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="contacts-list">
+                    <div class="contact-card primary">
+                        <div class="contact-icon">🚨</div>
+                        <div class="contact-data">
+                            <strong>Número Nacional de Emergencias</strong>
+                            <span class="phone-highlight">911</span>
+                            <small>Ambulancias, Bomberos, Policía y Protección Civil</small>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">🛡️</div>
+                        <div class="contact-data">
+                            <strong>Protección Civil del Estado de Baja California</strong>
+                            <span>(686) 555-4920 / 555-4921</span>
+                            <small>Atención 24/7 en Mexicali y Zona Costa</small>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">🏢</div>
+                        <div class="contact-data">
+                            <strong>Protección Civil Municipal Mexicali</strong>
+                            <span>(686) 554-9211</span>
+                            <small>Calz. Independencia #998, Centro Cívico</small>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">🎓</div>
+                        <div class="contact-data">
+                            <strong>Brigada de Emergencia UABC</strong>
+                            <span>(686) 841-8200 Ext. 43100</span>
+                            <small>Facultad de Ciencias de la Ingeniería y Tecnología</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-modal btn-cancel" id="btnCancelContacts">Cerrar</button>
+                    <a href="tel:911" class="btn-modal btn-emergency-call">Llamar al 911 Ahora</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Configuración de Alertas -->
+    <div class="modal-backdrop" id="modalSettings" aria-hidden="true">
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalSettingsTitle">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalSettingsTitle">Configurar Alertas Sísmicas</h3>
+                <button class="modal-close" id="btnCloseSettings" type="button"
+                    aria-label="Cerrar modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <label class="switch-row">
+                        <div>
+                            <strong>Sonido de Alarma Sísmica</strong>
+                            <p class="text-muted">Reproducir tono de alerta cuando la amplitud supere el nivel crítico
+                            </p>
+                        </div>
+                        <input type="checkbox" id="checkSoundAlert" checked>
+                    </label>
+
+                    <label class="switch-row">
+                        <div>
+                            <strong>Notificaciones del Navegador</strong>
+                            <p class="text-muted">Mostrar alerta emergente en eventos de magnitud ≥ 5.0</p>
+                        </div>
+                        <input type="checkbox" id="checkBrowserNotifications" checked>
+                    </label>
+
+                    <label class="switch-row">
+                        <div>
+                            <strong>Simulación en Tiempo Real</strong>
+                            <p class="text-muted">Pulsos continuos simulando la señal en vivo desde el sensor CI.BAR.BHZ
+                            </p>
+                        </div>
+                        <input type="checkbox" id="checkSimulationMode" checked>
+                    </label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-modal btn-submit" id="btnSaveSettings">Guardar
+                        Preferencias</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastNotification">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toastMessage">Acción completada con éxito</span>
+    </div>
+
+    <!-- External Libraries -->
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Main Application Logic -->
+    <script src="app.js"></script>
+</body>
+
+</html>
