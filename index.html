@@ -4,23 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CimaAlerta - Centro Nacional de Monitoreo Sísmico</title>
-    <!-- Favicon -->
+    <title>CimaAlerta - Monitoreo Sísmico</title>
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23059669' stroke-width='2'><path d='M22 12h-4l-3 9L9 3l-3 9H2'/></svg>">
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <!-- Top Header Bar -->
+    <!-- barra de navegacion -->
     <header class="top-nav">
         <div class="nav-brand">
             <div class="brand-logo-box">
@@ -48,21 +44,21 @@
                 </span>
             </div>
 
-            <div class="user-profile" id="userProfileBtn" title="Haz clic para subir tu foto de perfil">
+            <div class="user-profile" id="userProfileBtn" title="Clic para cambiar foto de perfil">
                 <div class="user-avatar">
-                    <img id="userAvatarImg" src="perfil.jpg" alt="Foto de Perfil"
+                    <img id="userAvatarImg" src="perfil.png" alt="Foto de Perfil"
                         onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Willy+Tarin&background=0D8ABC&color=fff';">
                     <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
                 </div>
                 <div class="user-info">
-                    <span class="user-name" id="profileUserName" title="Clic para editar nombre">Willy Castellano</span>
+                    <span class="user-name" id="profileUserName" title="Clic para editar nombre">Willy Tarín</span>
                     <span class="user-role">Brigadista UABC</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Alert Ribbon / Banner -->
+    <!-- banner de alerta -->
     <aside class="alert-ribbon" id="alertBanner" role="alert">
         <div class="alert-content">
             <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
@@ -81,14 +77,13 @@
         </div>
     </aside>
 
-    <!-- Main Dashboard Layout -->
+    <!-- contenedor principal -->
     <main class="dashboard-wrapper">
         <div class="dashboard-grid-top">
-            <!-- Map Card (Left) -->
+            <!-- mapa y tarjeta de epicentro -->
             <section class="card map-card" aria-label="Mapa de epicentro">
                 <div id="map" class="map-view"></div>
 
-                <!-- Epicenter Floating Overlay Card -->
                 <article class="epicenter-overlay" id="epicenterCard">
                     <div class="overlay-header">
                         <span class="live-dot-red"></span>
@@ -124,26 +119,26 @@
                 </article>
             </section>
 
-            <!-- Right Column -->
+            <!-- columna derecha: sismos recientes y botones -->
             <div class="dashboard-col-right">
-                <!-- Sismos Recientes Card (Semáforo de Alerta) -->
+                <!-- sismos recientes -->
                 <section class="card recent-quakes-card" aria-label="Sismos Recientes">
                     <div class="card-header">
                         <h2 class="card-title">Sismos Recientes</h2>
                         <span class="live-badge">EN VIVO</span>
                     </div>
                     <ul class="quake-list" id="quakeList">
-                        <!-- Populated dynamically via app.js -->
+                        <!-- generado desde app.js -->
                     </ul>
                 </section>
 
-                <!-- Acciones Rápidas Card -->
+                <!-- acciones rapidas -->
                 <section class="card quick-actions-card" aria-label="Acciones Rápidas">
                     <div class="card-header">
                         <h2 class="card-title">Acciones Rápidas</h2>
                     </div>
                     <div class="action-buttons-grid">
-                        <!-- Emergencias 911 -->
+                        <!-- boton emergencias -->
                         <button class="btn-action btn-emergency" id="btnOpenEmergencyModal" type="button">
                             <div class="btn-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
@@ -159,7 +154,7 @@
                             </div>
                         </button>
 
-                        <!-- Mochila y Checklist -->
+                        <!-- boton mochila y checklist -->
                         <button class="btn-action btn-checklist" id="btnOpenChecklistModal" type="button">
                             <div class="btn-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
@@ -177,7 +172,7 @@
                             </div>
                         </button>
 
-                        <!-- Protección Civil -->
+                        <!-- boton proteccion civil -->
                         <button class="btn-action btn-protection" id="btnOpenContactsModal" type="button">
                             <div class="btn-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
@@ -187,11 +182,11 @@
                             </div>
                             <div class="btn-text">
                                 <span class="btn-title">Protección Civil</span>
-                                <span class="btn-subtitle">Directorio de Contactos</span>
+                                <span class="btn-subtitle">Directorio y Vías</span>
                             </div>
                         </button>
 
-                        <!-- Alertas / Configurar -->
+                        <!-- boton alertas -->
                         <button class="btn-action btn-alerts" id="btnOpenSettingsModal" type="button">
                             <div class="btn-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
@@ -204,7 +199,7 @@
                             </div>
                             <div class="btn-text">
                                 <span class="btn-title">Alertas</span>
-                                <span class="btn-subtitle">Configurar Dispositivos</span>
+                                <span class="btn-subtitle">Configurar</span>
                             </div>
                         </button>
                     </div>
@@ -212,27 +207,26 @@
             </div>
         </div>
 
-        <!-- Bottom Card: Gráfica de Serie de Tiempo (Amplitud vs. Tiempo) -->
+        <!-- grafica inferior -->
         <section class="card timeseries-card" aria-label="Gráfica de Actividad Sísmica">
             <div class="timeseries-header">
                 <div>
                     <h2 class="card-title" id="graphTitle">Actividad Sísmica – Serie de Tiempo (Amplitud vs. Tiempo)
                     </h2>
                     <p class="card-subtitle" id="graphSubtitle">
-                        Conectado a estructura JSON Semana 9 (Estación <span id="infoEstacionNombre">CI.BAR.BHZ</span>)
-                        | 3,600 lecturas por segundo (Downsampled)
+                        Estación <span id="infoEstacionNombre">CI.BAR.BHZ</span> | 3,600 lecturas por segundo
                     </p>
                 </div>
                 <div class="graph-legend-toggles">
                     <div class="legend-items">
-                        <span class="legend-pill red-pill"><span class="dot"></span> Amplitud ≥ 2000 (Crítico)</span>
+                        <span class="legend-pill red-pill"><span class="dot"></span> Amplitud &ge; 2000 (Crítico)</span>
                         <span class="legend-pill amber-pill"><span class="dot"></span> 1700 - 1999 (Medio)</span>
                         <span class="legend-pill green-pill"><span class="dot"></span> &lt; 1700 (Normal)</span>
                     </div>
                     <div class="view-switch-btns">
-                        <button class="btn-switch active" id="btnViewAll" type="button">Todo (1 Hora)</button>
-                        <button class="btn-switch" id="btnViewPeak" type="button">Ventana del Sismo</button>
-                        <button class="btn-switch" id="btnViewFigma" type="button">Modo Figma (30 Días)</button>
+                        <button class="btn-switch active" id="btnViewAll" type="button">Registro continuo (1h)</button>
+                        <button class="btn-switch" id="btnViewPeak" type="button">Evento sísmico</button>
+                        <button class="btn-switch" id="btnViewFigma" type="button">Histórico (30 días)</button>
                     </div>
                 </div>
             </div>
@@ -243,13 +237,13 @@
         </section>
     </main>
 
-    <!-- Modal 1: Reportar Daños o Emergencias -->
+    <!-- ventana de reporte de emergencias -->
     <div class="modal-backdrop" id="modalEmergency" aria-hidden="true">
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalEmergencyTitle">
             <div class="modal-header">
                 <h3 class="modal-title" id="modalEmergencyTitle">Reportar Daños o Emergencias</h3>
                 <button class="modal-close" id="btnCloseEmergency" type="button"
-                    aria-label="Cerrar modal">&times;</button>
+                    aria-label="Cerrar ventana">&times;</button>
             </div>
             <form id="emergencyForm" class="modal-body">
                 <div class="form-group">
@@ -259,13 +253,13 @@
 
                 <div class="form-group">
                     <label for="inputPhone">TELÉFONO DE CONTACTO</label>
-                    <input type="tel" id="inputPhone" class="form-control" value="686 123 4567" required>
+                    <input type="tel" id="inputPhone" class="form-control" value="664 123 4567" required>
                 </div>
 
                 <div class="form-group">
                     <label for="inputLocation">UBICACIÓN PRECISA</label>
                     <input type="text" id="inputLocation" class="form-control"
-                        value="Calle Novena y Av. Juárez, Mexicali" required>
+                        value="Blvd. Universitario #1000, Valle de las Palmas, Tijuana" required>
                 </div>
 
                 <div class="form-group">
@@ -313,85 +307,148 @@
         </div>
     </div>
 
-    <!-- Modal 2: Guía de Acción y Mochila -->
+    <!-- ventana de checklist y revision de vivienda -->
     <div class="modal-backdrop" id="modalChecklist" aria-hidden="true">
         <div class="modal-dialog modal-wide" role="dialog" aria-modal="true" aria-labelledby="modalChecklistTitle">
             <div class="modal-header">
-                <h3 class="modal-title" id="modalChecklistTitle">Guía de Acción y Mochila</h3>
+                <h3 class="modal-title" id="modalChecklistTitle">Guía de Acción, Mochila e Inspección</h3>
                 <button class="modal-close" id="btnCloseChecklist" type="button"
-                    aria-label="Cerrar modal">&times;</button>
+                    aria-label="Cerrar ventana">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="checklist-columns">
-                    <!-- Column 1: Guía de Acción Sísmica -->
-                    <div class="checklist-col">
-                        <div class="checklist-col-header">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                class="col-icon">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            <h4>Guía de Acción Sísmica</h4>
+                <!-- pestanas internas del checklist -->
+                <div class="modal-tab-nav">
+                    <button type="button" class="tab-pill active" id="tabBtnGuiaMochila">Guía y Mochila</button>
+                    <button type="button" class="tab-pill" id="tabBtnDanosVivienda">Inspección de Vivienda</button>
+                </div>
+
+                <!-- panel 1: guia sismica y mochila de emergencia figma -->
+                <div class="tab-panel active" id="tabPanelGuiaMochila">
+                    <div class="checklist-columns">
+                        <!-- columna 1: guia de accion -->
+                        <div class="checklist-col">
+                            <div class="checklist-col-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    class="col-icon">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                </svg>
+                                <h4>Guía de Acción Sísmica</h4>
+                            </div>
+                            <div class="checklist-items" id="listaAccionSismica">
+                                <label class="check-item"><input type="checkbox" checked data-id="calma"> <span>Mantener
+                                        la calma</span></label>
+                                <label class="check-item"><input type="checkbox" checked data-id="no_correr"> <span>No
+                                        correr ni usar elevadores</span></label>
+                                <label class="check-item"><input type="checkbox" data-id="triangulo"> <span>Buscar el
+                                        Triángulo de la Vida</span></label>
+                                <label class="check-item"><input type="checkbox" checked data-id="ventanas">
+                                    <span>Alejarse de ventanas y objetos que puedan caer</span></label>
+                                <label class="check-item"><input type="checkbox" data-id="llaves"> <span>Cerrar llaves
+                                        de gas y agua</span></label>
+                                <label class="check-item"><input type="checkbox" data-id="punto_reunion">
+                                    <span>Dirigirse al punto de reunión</span></label>
+                            </div>
                         </div>
-                        <div class="checklist-items" id="listaAccionSismica">
-                            <label class="check-item"><input type="checkbox" checked data-id="calma"> <span>Mantener la
-                                    calma</span></label>
-                            <label class="check-item"><input type="checkbox" checked data-id="no_correr"> <span>No
-                                    correr ni usar elevadores</span></label>
-                            <label class="check-item"><input type="checkbox" data-id="triangulo"> <span>Buscar el
-                                    Triángulo de la Vida</span></label>
-                            <label class="check-item"><input type="checkbox" checked data-id="ventanas"> <span>Alejarse
-                                    de ventanas y objetos que puedan caer</span></label>
-                            <label class="check-item"><input type="checkbox" data-id="llaves"> <span>Cerrar llaves de
-                                    gas y agua</span></label>
-                            <label class="check-item"><input type="checkbox" data-id="punto_reunion"> <span>Dirigirse al
-                                    punto de reunión</span></label>
+
+                        <!-- columna 2: mochila de emergencia -->
+                        <div class="checklist-col">
+                            <div class="checklist-col-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    class="col-icon">
+                                    <path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10Z">
+                                    </path>
+                                    <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                                <h4>Mochila de Emergencia</h4>
+                            </div>
+                            <div class="checklist-items" id="listaMochilaEmergencia">
+                                <label class="check-item"><input type="checkbox" checked data-id="agua"> <span>Agua
+                                        embotellada</span></label>
+                                <label class="check-item"><input type="checkbox" checked data-id="comida">
+                                    <span>Alimentos no perecederos</span></label>
+                                <label class="check-item"><input type="checkbox" checked data-id="linterna">
+                                    <span>Linterna con pilas</span></label>
+                                <label class="check-item"><input type="checkbox" data-id="botiquin"> <span>Botiquín de
+                                        primeros auxilios</span></label>
+                                <label class="check-item"><input type="checkbox" data-id="radio"> <span>Radio de pilas
+                                        AM/FM</span></label>
+                                <label class="check-item"><input type="checkbox" data-id="manta"> <span>Manta
+                                        térmica</span></label>
+                                <label class="check-item"><input type="checkbox" data-id="silbato"> <span>Silbato de
+                                        emergencia</span></label>
+                                <label class="check-item"><input type="checkbox" data-id="docs"> <span>Documentos
+                                        importantes</span></label>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Column 2: Mochila de Emergencia -->
-                    <div class="checklist-col">
-                        <div class="checklist-col-header">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                class="col-icon">
-                                <path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10Z">
-                                </path>
-                                <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
-                            </svg>
-                            <h4>Mochila de Emergencia</h4>
-                        </div>
-                        <div class="checklist-items" id="listaMochilaEmergencia">
-                            <label class="check-item"><input type="checkbox" checked data-id="agua"> <span>Agua
-                                    embotellada</span></label>
-                            <label class="check-item"><input type="checkbox" checked data-id="comida"> <span>Alimentos
-                                    no perecederos</span></label>
-                            <label class="check-item"><input type="checkbox" checked data-id="linterna"> <span>Linterna
-                                    con pilas</span></label>
-                            <label class="check-item"><input type="checkbox" data-id="botiquin"> <span>Botiquín de
-                                    primeros auxilios</span></label>
-                            <label class="check-item"><input type="checkbox" data-id="radio"> <span>Radio de pilas
-                                    AM/FM</span></label>
-                            <label class="check-item"><input type="checkbox" data-id="manta"> <span>Manta
-                                    térmica</span></label>
-                            <label class="check-item"><input type="checkbox" data-id="silbato"> <span>Silbato de
-                                    emergencia</span></label>
-                            <label class="check-item"><input type="checkbox" data-id="docs"> <span>Documentos
-                                    importantes</span></label>
-                        </div>
+                    <div class="checklist-tip-box">
+                        <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18h6"></path>
+                            <path d="M10 22h4"></path>
+                            <path
+                                d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14">
+                            </path>
+                        </svg>
+                        <p>Prepare su mochila con elementos esenciales para sobrevivir las primeras 72 horas de forma
+                            autónoma.</p>
                     </div>
                 </div>
 
-                <div class="checklist-tip-box">
-                    <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18h6"></path>
-                        <path d="M10 22h4"></path>
-                        <path
-                            d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14">
-                        </path>
-                    </svg>
-                    <p>Prepare su mochila con elementos esenciales para sobrevivir las primeras 72 horas de forma
-                        autónoma.</p>
+                <!-- panel 2: revision de danos en viviendas -->
+                <div class="tab-panel" id="tabPanelDanosVivienda">
+                    <div class="vivienda-info-box">
+                        <span class="vivienda-badge-critico">Atención prioritaria</span>
+                        <p>Lista técnica para identificar si un inmueble presenta daño estructural severo tras un sismo.
+                            Si detecta dos o más puntos críticos, desaloje de inmediato y llame al 911 o a Protección
+                            Civil.</p>
+                    </div>
+                    <div class="checklist-items checklist-vivienda-grid" id="listaDanosVivienda">
+                        <label class="check-item danger-check">
+                            <input type="checkbox" data-id="grietas_x">
+                            <div>
+                                <strong>Grietas en diagonal o en forma de "X" en muros</strong>
+                                <small>Indican falla por esfuerzo cortante en muros de carga.</small>
+                            </div>
+                        </label>
+                        <label class="check-item danger-check">
+                            <input type="checkbox" data-id="fisura_columnas">
+                            <div>
+                                <strong>Fisuras o concreto desprendido en columnas y trabes</strong>
+                                <small>Peligro crítico si se aprecian las varillas de acero dobladas.</small>
+                            </div>
+                        </label>
+                        <label class="check-item danger-check">
+                            <input type="checkbox" data-id="hundimiento_piso">
+                            <div>
+                                <strong>Hundimiento, escalonamiento o fractura del piso</strong>
+                                <small>Señal de asentamiento diferencial en la cimentación.</small>
+                            </div>
+                        </label>
+                        <label class="check-item warning-check">
+                            <input type="checkbox" data-id="puertas_atoradas">
+                            <div>
+                                <strong>Puertas o ventanas que se atoran o no cierran</strong>
+                                <small>Indica deformación o descuadre de los marcos estructurales.</small>
+                            </div>
+                        </label>
+                        <label class="check-item warning-check">
+                            <input type="checkbox" data-id="fuga_servicios">
+                            <div>
+                                <strong>Fugas en tuberías de gas, agua o chispas eléctricas</strong>
+                                <small>Cierre llaves de paso inmediatamente para prevenir explosiones.</small>
+                            </div>
+                        </label>
+                        <label class="check-item danger-check">
+                            <input type="checkbox" data-id="inclinacion_muro">
+                            <div>
+                                <strong>Inclinación visible o desplome del edificio o bardas</strong>
+                                <small>Riesgo inminente de colapso en caso de réplica sísmica.</small>
+                            </div>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -402,49 +459,130 @@
         </div>
     </div>
 
-    <!-- Modal 3: Protección Civil Contactos -->
+    <!-- ventana de proteccion civil, carreteras y servicios -->
     <div class="modal-backdrop" id="modalContacts" aria-hidden="true">
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalContactsTitle">
+        <div class="modal-dialog modal-wide" role="dialog" aria-modal="true" aria-labelledby="modalContactsTitle">
             <div class="modal-header">
-                <h3 class="modal-title" id="modalContactsTitle">Directorio de Protección Civil BC</h3>
+                <h3 class="modal-title" id="modalContactsTitle">Protección Civil - Directorio, Vialidades y Servicios
+                </h3>
                 <button class="modal-close" id="btnCloseContacts" type="button"
-                    aria-label="Cerrar modal">&times;</button>
+                    aria-label="Cerrar ventana">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="contacts-list">
-                    <div class="contact-card primary">
-                        <div class="contact-icon">🚨</div>
-                        <div class="contact-data">
-                            <strong>Número Nacional de Emergencias</strong>
-                            <span class="phone-highlight">911</span>
-                            <small>Ambulancias, Bomberos, Policía y Protección Civil</small>
+                <!-- pestanas de proteccion civil -->
+                <div class="modal-tab-nav">
+                    <button type="button" class="tab-pill active" id="tabBtnContactsDir">Directorio</button>
+                    <button type="button" class="tab-pill" id="tabBtnCarreteras">Carreteras y Vías</button>
+                    <button type="button" class="tab-pill" id="tabBtnServicios">Agua y Electricidad</button>
+                </div>
+
+                <!-- panel directorio -->
+                <div class="tab-panel active" id="tabPanelContactsDir">
+                    <div class="contacts-list">
+                        <div class="contact-card primary">
+                            <div class="contact-icon">🚨</div>
+                            <div class="contact-data">
+                                <strong>Número Nacional de Emergencias</strong>
+                                <span class="phone-highlight">911</span>
+                                <small>Ambulancias, Bomberos, Policía y Protección Civil</small>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="contact-icon">🏢</div>
+                            <div class="contact-data">
+                                <strong>Protección Civil Municipal Tijuana</strong>
+                                <span>(664) 683-9112 / (664) 683-9114</span>
+                                <small>Av. Ermita Norte #3820, Col. Santos, Tijuana</small>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="contact-icon">🛡️</div>
+                            <div class="contact-data">
+                                <strong>Protección Civil Estatal – Zona Costa</strong>
+                                <span>(664) 634-9360</span>
+                                <small>Vía Rápida Poniente, Centro de Gobierno, Tijuana</small>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="contact-icon">🎓</div>
+                            <div class="contact-data">
+                                <strong>Brigada de Emergencia UABC – Valle de las Palmas</strong>
+                                <span>(664) 979-7500 Ext. 54000</span>
+                                <small>Facultad de Ciencias de la Ingeniería y Tecnología (FCITEC)</small>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="contact-card">
-                        <div class="contact-icon">🛡️</div>
-                        <div class="contact-data">
-                            <strong>Protección Civil del Estado de Baja California</strong>
-                            <span>(686) 555-4920 / 555-4921</span>
-                            <small>Atención 24/7 en Mexicali y Zona Costa</small>
+                <!-- panel carreteras y vialidades -->
+                <div class="tab-panel" id="tabPanelCarreteras">
+                    <div class="vias-status-list">
+                        <div class="via-card status-warning">
+                            <div class="via-status-dot"></div>
+                            <div class="via-info">
+                                <strong>Bulevar 2000 y Carretera Tijuana – Tecate / Valle de las Palmas</strong>
+                                <span class="via-status-text">Tránsito con precaución en accesos al campus
+                                    universitario</span>
+                                <small>Monitoreo preventivo de taludes y terraplenes en el tramo Valle San
+                                    Pedro.</small>
+                            </div>
+                            <span class="via-link">Vigilancia activa</span>
+                        </div>
+
+                        <div class="via-card status-ok">
+                            <div class="via-status-dot"></div>
+                            <div class="via-info">
+                                <strong>Carretera Escénica Tijuana – Ensenada (Fed 1D)</strong>
+                                <span class="via-status-text">Operando con vigilancia geotécnica preventiva</span>
+                                <small>Sin deslizamiento en la zona de fallas de Salsipuedes.</small>
+                            </div>
+                            <span class="badge-via-ok">Abierta</span>
+                        </div>
+
+                        <div class="via-card status-ok">
+                            <div class="via-status-dot"></div>
+                            <div class="via-info">
+                                <strong>Autopista de Cuota Tijuana – Tecate (Fed 2D)</strong>
+                                <span class="via-status-text">Circulación normal y fluida en ambos sentidos</span>
+                                <small>Caseta y puentes vehiculares sin afectación estructural.</small>
+                            </div>
+                            <span class="badge-via-ok">Abierta</span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="contact-card">
-                        <div class="contact-icon">🏢</div>
-                        <div class="contact-data">
-                            <strong>Protección Civil Municipal Mexicali</strong>
-                            <span>(686) 554-9211</span>
-                            <small>Calz. Independencia #998, Centro Cívico</small>
+                <!-- panel agua y electricidad -->
+                <div class="tab-panel" id="tabPanelServicios">
+                    <div class="servicios-grid">
+                        <div class="servicio-card">
+                            <div class="servicio-header">
+                                <span class="servicio-icon">⚡</span>
+                                <div>
+                                    <strong>CFE – Zona Tijuana y Tecate</strong>
+                                    <small>Línea de reporte: 071</small>
+                                </div>
+                            </div>
+                            <p class="servicio-desc">Subestaciones Florido y Valle San Pedro operando con normalidad.
+                                Cuadrillas disponibles para atención en Valle de las Palmas.</p>
+                            <a href="https://www.cfe.mx" target="_blank" rel="noopener" class="servicio-btn">Reportar
+                                falla a CFE</a>
                         </div>
-                    </div>
 
-                    <div class="contact-card">
-                        <div class="contact-icon">🎓</div>
-                        <div class="contact-data">
-                            <strong>Brigada de Emergencia UABC</strong>
-                            <span>(686) 841-8200 Ext. 43100</span>
-                            <small>Facultad de Ciencias de la Ingeniería y Tecnología</small>
+                        <div class="servicio-card">
+                            <div class="servicio-header">
+                                <span class="servicio-icon">💧</span>
+                                <div>
+                                    <strong>CESPT Tijuana (Comisión Estatal de Servicios Públicos)</strong>
+                                    <small>Línea de fugas: 073</small>
+                                </div>
+                            </div>
+                            <p class="servicio-desc">Acueducto Carrizo – El Florido y ramales a Valle de las Palmas
+                                funcionando con presión regular al 100%.</p>
+                            <a href="https://www.cespt.gob.mx" target="_blank" rel="noopener"
+                                class="servicio-btn">Reportar fuga en CESPT</a>
                         </div>
                     </div>
                 </div>
@@ -457,13 +595,13 @@
         </div>
     </div>
 
-    <!-- Modal 4: Configuración de Alertas -->
+    <!-- ventana de configuracion de alertas -->
     <div class="modal-backdrop" id="modalSettings" aria-hidden="true">
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalSettingsTitle">
             <div class="modal-header">
                 <h3 class="modal-title" id="modalSettingsTitle">Configurar Alertas Sísmicas</h3>
                 <button class="modal-close" id="btnCloseSettings" type="button"
-                    aria-label="Cerrar modal">&times;</button>
+                    aria-label="Cerrar ventana">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="settings-group">
@@ -479,7 +617,7 @@
                     <label class="switch-row">
                         <div>
                             <strong>Notificaciones del Navegador</strong>
-                            <p class="text-muted">Mostrar alerta emergente en eventos de magnitud ≥ 5.0</p>
+                            <p class="text-muted">Mostrar alerta emergente en eventos de magnitud &ge; 5.0</p>
                         </div>
                         <input type="checkbox" id="checkBrowserNotifications" checked>
                     </label>
@@ -502,19 +640,16 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- aviso flotante toast -->
     <div class="toast-container" id="toastNotification">
         <span class="toast-icon">✓</span>
         <span class="toast-message" id="toastMessage">Acción completada con éxito</span>
     </div>
 
-    <!-- External Libraries -->
-    <!-- Leaflet JS -->
+    <!-- librerias y logica -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Main Application Logic -->
     <script src="app.js"></script>
 </body>
 
