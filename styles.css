@@ -1,8 +1,4 @@
-/* ==========================================================================
-   CimaAlerta - Centro Nacional de Monitoreo Sísmico
-   Figma Exact Design & Responsive UX/UI Implementation
-   ========================================================================== */
-
+/* variables globales y reseteo */
 :root {
     --bg-page: #F6EEDB;
     --header-bg: #97CFB0;
@@ -50,9 +46,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* ==========================================================================
-   Top Navigation Bar
-   ========================================================================== */
+/* barra superior */
 .top-nav {
     background-color: var(--header-bg);
     padding: 10px 24px;
@@ -99,8 +93,9 @@ body {
     color: #374151;
     font-size: 0.68rem;
     font-weight: 700;
-    padding: 4px 10px;
-    border-radius: var(--radius-full);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
@@ -119,43 +114,40 @@ body {
 .wifi-icon {
     width: 18px;
     height: 18px;
-    color: #1F2937;
+    color: #111827;
 }
 
 .status-pill {
-    background-color: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    padding: 5px 12px;
-    border-radius: var(--radius-full);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #166534;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #065F46;
 }
 
 .pulse-dot {
-    width: 8px;
-    height: 8px;
-    background-color: #16A34A;
+    width: 7px;
+    height: 7px;
+    background-color: #10B981;
     border-radius: 50%;
     display: inline-block;
-    box-shadow: 0 0 0 rgba(22, 163, 74, 0.6);
-    animation: greenPulse 2s infinite;
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulseDot 2s infinite;
 }
 
-@keyframes greenPulse {
+@keyframes pulseDot {
     0% {
-        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
     }
-
     70% {
-        box-shadow: 0 0 0 6px rgba(22, 163, 74, 0);
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
     }
-
     100% {
-        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
     }
 }
 
@@ -164,31 +156,29 @@ body {
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    padding: 4px 8px;
-    border-radius: var(--radius-sm);
-    transition: background-color 0.2s ease;
+    padding: 3px 8px;
+    border-radius: var(--radius-md);
+    transition: background-color 0.15s ease;
 }
 
 .user-profile:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.35);
 }
 
 .user-avatar {
-    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #FFFFFF;
+    box-shadow: var(--shadow-sm);
+    flex-shrink: 0;
 }
 
 .user-avatar img {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    display: block;
-    transition: transform 0.2s ease;
-}
-
-.user-profile:hover .user-avatar img {
-    transform: scale(1.08);
 }
 
 .user-info {
@@ -198,29 +188,26 @@ body {
 }
 
 .user-name {
-    font-size: 0.86rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #111827;
 }
 
 .user-role {
-    font-size: 0.72rem;
-    font-weight: 500;
+    font-size: 0.68rem;
     color: #374151;
+    font-weight: 500;
 }
 
-/* ==========================================================================
-   Alert Ribbon Banner
-   ========================================================================== */
+/* franja de alerta naranja */
 .alert-ribbon {
     background-color: var(--alert-bg);
     color: #FFFFFF;
-    padding: 9px 24px;
+    padding: 8px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.87rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
 }
 
 .alert-content {
@@ -230,13 +217,13 @@ body {
 }
 
 .alert-icon {
-    width: 19px;
-    height: 19px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
 }
 
 .alert-ribbon p {
-    margin: 0;
+    font-size: 0.84rem;
     font-weight: 500;
 }
 
@@ -255,9 +242,7 @@ body {
     white-space: nowrap;
 }
 
-/* ==========================================================================
-   Main Dashboard Layout Grid
-   ========================================================================== */
+/* cuadricula principal */
 .dashboard-wrapper {
     flex: 1;
     padding: 20px 24px;
@@ -271,7 +256,7 @@ body {
 
 .dashboard-grid-top {
     display: grid;
-    grid-template-columns: 1fr 390px;
+    grid-template-columns: 1fr 430px;
     gap: 18px;
 }
 
@@ -283,9 +268,7 @@ body {
     overflow: hidden;
 }
 
-/* ==========================================================================
-   Map Card & Floating Epicenter Card
-   ========================================================================== */
+/* tarjeta del mapa */
 .map-card {
     position: relative;
     height: 480px;
@@ -300,7 +283,7 @@ body {
     z-index: 1;
 }
 
-/* Floating Epicenter Overlay */
+/* tarjeta flotante del epicentro */
 .epicenter-overlay {
     position: absolute;
     top: 18px;
@@ -343,36 +326,33 @@ body {
     0% {
         box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
     }
-
     70% {
         box-shadow: 0 0 0 7px rgba(220, 38, 38, 0);
     }
-
     100% {
         box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
     }
 }
 
 .overlay-tag {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #4B5563;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--color-danger);
+    letter-spacing: 0.8px;
 }
 
 .overlay-magnitude-row {
     display: flex;
     align-items: baseline;
-    gap: 8px;
+    gap: 12px;
     margin-bottom: 12px;
 }
 
 .mag-number {
-    font-size: 2.8rem;
+    font-size: 2.3rem;
     font-weight: 800;
     color: var(--color-danger);
     line-height: 1;
-    letter-spacing: -1px;
 }
 
 .mag-meta {
@@ -381,15 +361,15 @@ body {
 }
 
 .mag-label {
-    font-size: 0.95rem;
+    font-size: 0.76rem;
     font-weight: 700;
     color: #111827;
 }
 
 .mag-severity {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.68rem;
     color: var(--color-danger);
+    font-weight: 600;
 }
 
 .overlay-details {
@@ -398,33 +378,29 @@ body {
     gap: 5px;
     border-top: 1px solid #F3F4F6;
     padding-top: 10px;
-    font-size: 0.78rem;
 }
 
 .detail-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    font-size: 0.75rem;
 }
 
 .detail-label {
     color: var(--color-text-muted);
-    font-weight: 500;
 }
 
 .detail-val {
-    font-weight: 700;
+    font-weight: 600;
     color: #111827;
 }
 
 .detail-val.highlight {
     color: var(--color-danger);
-    font-weight: 800;
+    font-weight: 700;
 }
 
-/* ==========================================================================
-   Leaflet Custom Pulse Animations (Seismic Waves on Map)
-   ========================================================================== */
+/* marcadores del mapa leaflet */
 .seismic-epicenter-marker {
     position: relative;
     display: flex;
@@ -434,12 +410,12 @@ body {
 
 .seismic-pulse-ring {
     position: absolute;
-    width: 68px;
-    height: 68px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    border: 2.5px solid rgba(220, 38, 38, 0.85);
-    background: rgba(220, 38, 38, 0.12);
-    animation: seismicRipple 2.4s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    border: 2px solid rgba(220, 38, 38, 0.55);
+    background-color: rgba(220, 38, 38, 0.08);
+    animation: seismicRipple 2.4s ease-out infinite;
 }
 
 .seismic-pulse-ring:nth-child(2) {
@@ -455,7 +431,6 @@ body {
         transform: scale(0.3);
         opacity: 1;
     }
-
     100% {
         transform: scale(2.2);
         opacity: 0;
@@ -479,7 +454,6 @@ body {
     z-index: 10;
 }
 
-/* Secondary Earthquake Markers */
 .quake-circle-marker {
     width: 30px;
     height: 30px;
@@ -512,9 +486,7 @@ body {
     background-color: #10B981;
 }
 
-/* ==========================================================================
-   Right Column Layout (Sismos Recientes & Acciones Rápidas)
-   ========================================================================== */
+/* columna derecha */
 .dashboard-col-right {
     display: flex;
     flex-direction: column;
@@ -545,7 +517,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Quake List (Panel / Semáforo de Nivel de Alerta) */
+/* lista de sismos recientes */
 .quake-list {
     list-style: none;
     padding: 8px 14px 14px;
@@ -627,16 +599,14 @@ body {
     white-space: nowrap;
 }
 
-/* ==========================================================================
-   Acciones Rápidas (2x2 Buttons Grid)
-   ========================================================================== */
+/* acciones rapidas */
 .quick-actions-card {
     display: flex;
     flex-direction: column;
 }
 
 .action-buttons-grid {
-    padding: 14px;
+    padding: 12px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
@@ -645,8 +615,8 @@ body {
 .btn-action {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 14px;
+    gap: 10px;
+    padding: 11px 10px;
     border-radius: var(--radius-md);
     border: 1px solid transparent;
     cursor: pointer;
@@ -654,6 +624,7 @@ body {
     text-align: left;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--shadow-sm);
+    min-width: 0;
 }
 
 .btn-action:hover {
@@ -683,26 +654,26 @@ body {
 .btn-text {
     display: flex;
     flex-direction: column;
+    min-width: 0;
     overflow: hidden;
 }
 
 .btn-title {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.25;
+    white-space: normal;
+    word-break: normal;
 }
 
 .btn-subtitle {
-    font-size: 0.7rem;
+    font-size: 0.69rem;
     font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.2;
+    white-space: normal;
+    word-break: normal;
 }
 
-/* Button 1: Emergencias (Red) */
 .btn-emergency {
     background-color: #D32F2F;
     color: #FFFFFF;
@@ -714,10 +685,9 @@ body {
 }
 
 .btn-emergency .btn-subtitle {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.88);
 }
 
-/* Button 2: Mochila y Checklist (Gray) */
 .btn-checklist {
     background-color: #F1F3F5;
     color: #1F2937;
@@ -733,7 +703,6 @@ body {
     color: var(--color-text-muted);
 }
 
-/* Button 3: Protección Civil (Dark Navy Slate) */
 .btn-protection {
     background-color: #334155;
     color: #FFFFFF;
@@ -748,7 +717,6 @@ body {
     color: #CBD5E1;
 }
 
-/* Button 4: Alertas (Gray) */
 .btn-alerts {
     background-color: #F1F3F5;
     color: #1F2937;
@@ -764,9 +732,7 @@ body {
     color: var(--color-text-muted);
 }
 
-/* ==========================================================================
-   Bottom Timeseries Chart Card
-   ========================================================================== */
+/* grafica inferior de serie de tiempo */
 .timeseries-card {
     padding: 18px 22px 22px;
     display: flex;
@@ -861,9 +827,7 @@ body {
     height: 250px;
 }
 
-/* ==========================================================================
-   Modal Dialogs & Backdrops
-   ========================================================================== */
+/* modales y ventanas emergentes */
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -917,7 +881,7 @@ body {
 }
 
 .modal-title {
-    font-size: 1.22rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #111827;
 }
@@ -944,10 +908,49 @@ body {
 }
 
 .modal-body {
-    padding: 22px 24px;
+    padding: 20px 24px;
 }
 
-/* Forms */
+/* pestanas en modales */
+.modal-tab-nav {
+    display: flex;
+    gap: 6px;
+    background: #F1F5F9;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 18px;
+}
+
+.tab-pill {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.tab-pill.active {
+    background: #FFFFFF;
+    color: #0F172A;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* formularios */
 .form-group {
     margin-bottom: 16px;
 }
@@ -979,7 +982,6 @@ body {
     box-shadow: 0 0 0 3px rgba(14, 107, 56, 0.15);
 }
 
-/* Custom Radio Buttons */
 .radio-options {
     display: flex;
     flex-direction: column;
@@ -1037,7 +1039,7 @@ body {
 }
 
 .btn-modal {
-    padding: 10px 22px;
+    padding: 10px 20px;
     border-radius: var(--radius-sm);
     font-family: inherit;
     font-size: 0.88rem;
@@ -1079,14 +1081,12 @@ body {
     background-color: #B91C1C;
 }
 
-/* ==========================================================================
-   Checklist Modal Styles (Guía de Acción y Mochila)
-   ========================================================================== */
+/* lista de checklist */
 .checklist-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 20px;
+    gap: 20px;
+    margin-bottom: 16px;
 }
 
 .checklist-col-header {
@@ -1099,7 +1099,7 @@ body {
 }
 
 .checklist-col-header h4 {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 700;
     color: #111827;
 }
@@ -1113,7 +1113,7 @@ body {
 .checklist-items {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 9px;
 }
 
 .check-item {
@@ -1134,6 +1134,7 @@ body {
     cursor: pointer;
     border-radius: 4px;
     margin-top: 1px;
+    flex-shrink: 0;
 }
 
 .checklist-tip-box {
@@ -1156,14 +1157,72 @@ body {
 
 .checklist-tip-box p {
     margin: 0;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: #4B5563;
     line-height: 1.4;
 }
 
-/* ==========================================================================
-   Contact Cards & Settings
-   ========================================================================== */
+/* danos en vivienda */
+.vivienda-info-box {
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+.vivienda-badge-critico {
+    display: inline-block;
+    background-color: var(--color-danger);
+    color: #FFFFFF;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.vivienda-info-box p {
+    font-size: 0.8rem;
+    color: #991B1B;
+    line-height: 1.4;
+}
+
+.checklist-vivienda-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.check-item.danger-check,
+.check-item.warning-check {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.15s ease;
+}
+
+.check-item.danger-check:hover {
+    background-color: #FEF2F2;
+    border-color: #FECACA;
+}
+
+.check-item strong {
+    font-size: 0.85rem;
+    color: #1E293B;
+    display: block;
+}
+
+.check-item small {
+    font-size: 0.74rem;
+    color: #64748B;
+    display: block;
+    margin-top: 2px;
+}
+
+/* directorio de contactos */
 .contacts-list {
     display: flex;
     flex-direction: column;
@@ -1218,6 +1277,150 @@ body {
     color: #64748B;
 }
 
+/* estado de carreteras y vialidades */
+.vias-status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.via-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+.via-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.via-card.status-warning .via-status-dot {
+    background-color: #D97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+}
+
+.via-card.status-ok .via-status-dot {
+    background-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.via-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.via-info strong {
+    font-size: 0.88rem;
+    color: #0F172A;
+}
+
+.via-status-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.via-info small {
+    font-size: 0.73rem;
+    color: #64748B;
+}
+
+.via-link {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #2563EB;
+    text-decoration: none;
+    padding: 5px 10px;
+    background: #EFF6FF;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+}
+
+.via-link:hover {
+    background: #DBEAFE;
+}
+
+.badge-via-ok {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #065F46;
+    background: #D1FAE5;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+}
+
+/* servicios de luz y agua */
+.servicios-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.servicio-card {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius-md);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.servicio-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.servicio-icon {
+    font-size: 1.5rem;
+}
+
+.servicio-header strong {
+    font-size: 0.86rem;
+    color: #0F172A;
+    display: block;
+}
+
+.servicio-header small {
+    font-size: 0.72rem;
+    color: #64748B;
+    font-weight: 600;
+}
+
+.servicio-desc {
+    font-size: 0.78rem;
+    color: #475569;
+    line-height: 1.35;
+}
+
+.servicio-btn {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0E6B38;
+    background: #DCFCE7;
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.servicio-btn:hover {
+    background: #BBF7D0;
+}
+
+/* configuracion de alertas */
 .settings-group {
     display: flex;
     flex-direction: column;
@@ -1254,9 +1457,7 @@ body {
     cursor: pointer;
 }
 
-/* ==========================================================================
-   Toast Notification
-   ========================================================================== */
+/* toast */
 .toast-container {
     position: fixed;
     bottom: 24px;
@@ -1295,10 +1496,8 @@ body {
     font-weight: 800;
 }
 
-/* ==========================================================================
-   Responsive Adaptability (Tablets & Mobile)
-   ========================================================================== */
-@media (max-width: 1024px) {
+/* diseno responsivo */
+@media (max-width: 1100px) {
     .dashboard-grid-top {
         grid-template-columns: 1fr;
     }
@@ -1334,9 +1533,10 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .checklist-columns {
+    .checklist-columns,
+    .servicios-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 14px;
     }
 
     .epicenter-overlay {
